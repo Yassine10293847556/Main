@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temperaturas de Las Vegas, Kuwait y Precipitaciones de Las Vegas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        #chart1, #chart2, #chart3 {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperaturas de Las Vegas</h1>
+        <div id="chart1"></div>
+    </div>
+    <div class="container">
+        <h1>Temperaturas de Kuwait</h1>
+        <div id="chart2"></div>
+    </div>
+    <div class="container">
+        <h1>Precipitacions de Las Vegas</h1>
+        <div id="chart3"></div>
+    </div>
+
+</div>
+<div class="container">
+    <h1>Nivell de CO2 Las Vegas</h1>
+    <div id="chart4"></div>
+</div>
+
+    <script>
+        // Datos de Las Vegas
+        var decada_lv = [2010, 2000, 1990, 1980, 1970, 1960, 1950];
+        var temp_max_promedio_lv = [28.4, 27.9, 26.6, 26.6, 26.5, 26.2, 26.7];
+        var temp_min_promedio_lv = [15.7, 15.2, 13.6, 12.7, 11.8, 11.5, 11.2];
+        var promedio_lv = [22.05, 21.55, 20.1, 19.65, 19.15, 18.85, 18.95];
+
+        // Datos de Kuwait
+        var decada_kw = [2010, 2000, 1990, 1980, 1970, 1960, 1950];
+        var temp_max_kw = [41.5, 41.2, 40, 36.7, 40.2, 40, 38.8];
+        var temp_min_kw = [40.1, 40, 36.9, 36.3, 36.2, 35.7, 34.8];
+        var promedio_kw = [40.8, 40.6, 38.45, 36.5, 38.2, 37.85, 36.8];
+
+        ///// Datos de precipitaciones de Las Vegas
+        var ano_lv = [1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+        var promedio_lv = [67.8, 101.9, 83.6, 94.2, 98.8, 77.2, 86.9, 97.8, 100.8, 82.8, 92.7, 96.8, 107.7, 86.6, 82.3, 107.2, 81.5, 75.4, 88.9, 110.2, 93.2, 121.9, 76.2, 95.8, 103.9, 111.8, 69.3, 80.5, 117.6, 158.8, 97.3, 93.7, 77.5, 64.8, 74.4, 84.6, 72.6, 87.9, 97.5, 71.9, 63.8, 87.6, 91.4, 105.9, 114.3, 67.1, 72.9, 78.2, 66.3, 68.6, 113.5, 106.4, 57.9, 67.6, 63.5, 54.9, 61.2, 55.9, 62.5, 87.1, 62.2, 64.3, 112.8, 102.9, 76.7, 117.1, 51.3, 59.4, 68.1, 73.7];
+
+        
+        var ano_lve = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+var niv_co2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 400.1, 402.6, 405, 407.8, 410.5, 412.5, 414.4, 416.2, 418];
+
+// Crear un objeto con todos los años y sus valores de CO2
+var data_lv_co2 = [];
+for (var i = 0; i < ano_lve.length; i++) {
+    data_lv_co2.push({ x: ano_lve[i], y: niv_co2[i] });
+}
+
+        var data_lv = [
+            { x: decada_lv, y: temp_max_promedio_lv, mode: 'lines+markers', name: 'Temperatura máxima promedio (°C)' },
+            { x: decada_lv, y: temp_min_promedio_lv, mode: 'lines+markers', name: 'Temperatura mínima promedio (°C)' },
+            { x: decada_lv, y: promedio_lv, mode: 'lines+markers', name: 'Promedio' }
+        ];
+        var layout_lv = { title: 'Temperaturas en Las Vegas por década', xaxis: { title: 'Década' }, yaxis: { title: 'Temperatura (°C)' } };
+        Plotly.newPlot('chart1', data_lv, layout_lv);
+
+        var data_kw = [
+            { x: decada_kw, y: temp_max_kw, mode: 'lines+markers', name: 'Temperatura máxima (°C)' },
+            { x: decada_kw, y: temp_min_kw, mode: 'lines+markers', name: 'Temperatura mínima (°C)' },
+            { x: decada_kw, y: promedio_kw, mode: 'lines+markers', name: 'Promedio' }
+        ];
+        var layout_kw = { title: 'Temperaturas en Kuwait por década', xaxis: { title: 'Década' }, yaxis: { title: 'Temperatura (°C)' } };
+        Plotly.newPlot('chart2', data_kw, layout_kw);
+
+        var data_lv_rain = [
+            { x: ano_lv, y: promedio_lv, mode: 'lines+markers', name: 'Promedio (mm)' }
+        ];
+        var layout_lv_rain = { title: 'Precipitacions de Las Vegas per any', xaxis: { title: 'Año' }, yaxis: { title: 'Promedio (mm)' } };
+        Plotly.newPlot('chart3', data_lv_rain, layout_lv_rain);
+
+
+        var data_lv_co2 = [
+            { x: ano_lve, y: niv_co2, mode: 'lines+markers', name: 'Nivell (ppm)' }
+        ];
+        
+        var layout_lv_co2 = { title: 'Nivell de CO2 a Las Vegas', xaxis: { title: 'Año' }, yaxis: { title: 'Nivell (ppm)' } };
+        Plotly.newPlot('chart4', data_lv_co2, layout_lv_co2);
+
+
+
+       
+    </script>
+</body>
+</html>
